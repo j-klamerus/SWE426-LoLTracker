@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">LoLTracker</string>
+    <string-array name="regions">
+        <item>North America</item>
+        <item>Europe West</item>
+        <item>Europe Nordic and East</item>
+        <item>Korea</item>
+    </string-array>
 </resources>
