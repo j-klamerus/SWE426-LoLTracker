@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">LoLTracker</string>
+    <string name="summoner_name_tag">Summoner name + #tag</string>
+    <string name="search">Search</string>
     <string-array name="regions">
         <item>North America</item>
         <item>Europe West</item>
         <item>Europe Nordic and East</item>
         <item>Korea</item>
     </string-array>
+    <string name="account_display_head">Recently played matches</string>
 </resources>
