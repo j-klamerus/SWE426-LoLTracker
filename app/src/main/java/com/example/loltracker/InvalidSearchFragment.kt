@@ -5,12 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import com.example.loltracker.databinding.FragmentSearchBinding
+import com.example.loltracker.databinding.FragmentInvalidSearchBinding
 
-class SearchFragment : Fragment() {
+class InvalidSearchFragment : Fragment() {
 
-    private var _binding: FragmentSearchBinding? = null
+    private var _binding: FragmentInvalidSearchBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -18,34 +17,28 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        _binding = FragmentInvalidSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.searchButton.setOnClickListener {
+        /*
+        binding.mainREPLACEMEButton.setOnClickListener {
             // Prepares nav controller
             val navController = view.findNavController()
 
-            // Grabs the input from the account EditText
+            // Grabs the input from the account EditText and sends it to the profile fragment
             val account = binding.accountInputEdit.text.toString()
-
-            if (account == "latore#soudr") {
-                val action = SearchFragmentDirections.actionSearchFragmentToProfileStatFragment(account)
-                navController.navigate(action)
-            }
-            else {
-                val action = SearchFragmentDirections.actionSearchFragmentToInvalidSearchFragment()
-                navController.navigate(action)
-            }
-
-
+            val action = SearchFragmentDirections.actionSearchFragmentToProfileStatFragment(account)
+            navController.navigate(action)
 
             // Sends user to profile stat fragment after hitting the Search button
             //navController.navigate(R.id.action_searchFragment_to_profileStatFragment)
         }
+        */
+
     }
 
     override fun onDestroyView() {
