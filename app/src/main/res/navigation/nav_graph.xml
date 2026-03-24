@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/searchFragment">
+
+    <fragment
+        android:id="@+id/profileStatFragment"
+        android:name="com.example.loltracker.ui.ProfileStatFragment"
+        android:label="fragment_profile_stat"
+        tools:layout="@layout/fragment_profile_stat" >
+        <argument
+            android:name="account"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.loltracker.ui.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_profileStatFragment"
+            app:destination="@id/profileStatFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_invalidSearchFragment"
+            app:destination="@id/invalidSearchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/invalidSearchFragment"
+        android:name="com.example.loltracker.ui.InvalidSearchFragment"
+        android:label="fragment_invalid_search"
+        tools:layout="@layout/fragment_invalid_search" >
+        <action
+            android:id="@+id/action_invalidSearchFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+</navigation>
