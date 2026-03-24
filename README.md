@@ -2,6 +2,12 @@ XML and frontend-based Kotlin development will be done here.
 
 Changelog:
 
+3/23/2026
+
+    NEW:
+    Integrated Riot API. Whole lot of new files (see java\com.example.loltracker)
+    Currently just five textViews for testing. Should be ready to set up viewmodels and get a decent UI
+
 3/21/2026
 
     NEW:

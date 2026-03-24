@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/profileStatFragment"
-        android:name="com.example.loltracker.ProfileStatFragment"
+        android:name="com.example.loltracker.ui.ProfileStatFragment"
         android:label="fragment_profile_stat"
         tools:layout="@layout/fragment_profile_stat" >
         <argument
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.loltracker.SearchFragment"
+        android:name="com.example.loltracker.ui.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/invalidSearchFragment"
-        android:name="com.example.loltracker.InvalidSearchFragment"
+        android:name="com.example.loltracker.ui.InvalidSearchFragment"
         android:label="fragment_invalid_search"
         tools:layout="@layout/fragment_invalid_search" >
         <action
