@@ -2,6 +2,7 @@ package com.example.loltracker.network
 
 import com.example.loltracker.model.AccountResponse
 import com.example.loltracker.model.ProfileResponse
+import com.example.loltracker.model.MatchIDResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -21,4 +22,10 @@ interface RiotApiService {
         @Path("puuid") puuid: String,
         @Query("api_key") apiKey: String
     ): Response<ProfileResponse>
+
+    @GET("/lol/match/v5/matches/by-puuid/{puuid}/ids")
+    suspend fun getAccountMatchIDS(
+        @Path("puuid") puuid: String,
+        @Query("api_key") apiKey: String
+    ): Response<MatchIDResponse> //Response<MatchIDS>
 }

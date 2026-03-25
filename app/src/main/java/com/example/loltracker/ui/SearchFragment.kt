@@ -11,11 +11,14 @@ import androidx.lifecycle.lifecycleScope
 import com.example.loltracker.network.RiotAccountApi
 import com.example.loltracker.network.RiotSummonerApi
 import kotlinx.coroutines.launch
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 
 class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: SearchViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +32,22 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val apiKey = "RGAPI-9b77c0ab-4f60-4723-90b5-66d9c4dfc106"
+        val apiKey = ""
+
+        viewModel.accountData.observe(viewLifecycleOwner) { data ->
+            binding.textView.text = data?.gameName
+            binding.textView2.text = data?.tagLine
+            binding.textView3.text = data?.puuid
+        }
+
+        viewModel.profileData.observe(viewLifecycleOwner) { profile ->
+            binding.textView4.text = profile?.profileIconId.toString()
+            binding.textView5.text = profile?.summonerLevel.toString()
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
+            if (error != null) binding.textView.text = error
+        }
 
         binding.searchButton.setOnClickListener {
             // Prepares nav controller
@@ -42,45 +60,8 @@ class SearchFragment : Fragment() {
             val accountUser = account.getOrNull(0) ?: ""
             val accountTag = account.getOrNull(1) ?: ""
 
-            // Test code to make sure trim/splitting works
-            binding.textView.text = accountUser.trim().toString()
-            binding.textView2.text = accountTag.trim().toString()
+            viewModel.searchPlayer(accountUser, accountTag, apiKey)
 
-            lifecycleScope.launch {
-                try {
-                    val accountResponse = RiotAccountApi.api.getAccountPUUID(
-                        accountUser,
-                        accountTag,
-                        apiKey
-                    )
-
-                    if (accountResponse.isSuccessful) {
-                        val data = accountResponse.body()
-                        //val puuid = data?.puuid
-                        binding.textView.text = data?.gameName
-                        binding.textView2.text = data?.tagLine
-                        binding.textView3.text = data?.puuid
-
-                        val profileResponse = RiotSummonerApi.api.getAccountProfile(
-                            binding.textView3.text.toString(),
-                            apiKey
-                        )
-
-                        if (profileResponse.isSuccessful) {
-                            val profileData = profileResponse.body()
-                            binding.textView4.text = profileData?.profileIconId
-                            binding.textView5.text = profileData?.summonerLevel.toString()
-                        } else {
-                            binding.textView.text = "Profile Error: ${profileResponse.code()}"
-                        }
-
-                    } else {
-                        binding.textView2.text = "Account Error: ${accountResponse.code()}"
-                    }
-
-                } catch (e: Exception) {
-                    binding.textView3.text = "Exception: ${e.message}"
-                }
             }
 
             /*
@@ -97,7 +78,7 @@ class SearchFragment : Fragment() {
 
             // Sends user to profile stat fragment after hitting the Search button
             //navController.navigate(R.id.action_searchFragment_to_profileStatFragment)
-        }
+
     }
 
     override fun onDestroyView() {
