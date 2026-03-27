@@ -16,6 +16,12 @@
         <argument
             android:name="puuid"
             app:argType="string" />
+        <argument
+            android:name="profileIconId"
+            app:argType="integer" />
+        <argument
+            android:name="summonerLevel"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"

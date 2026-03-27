@@ -1,5 +1,6 @@
 package com.example.loltracker.ui
 
+import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +33,10 @@ class ProfileStatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.tempTextView.text = args.account
+        binding.tempTextView2.text = args.puuid
+        binding.tempTextView3.text = args.profileIconId.toString()
+        binding.tempTextView4.text = args.summonerLevel.toString()
         val message = args.account
         val puuid = args.puuid
         viewModel.searchMatchIDS(puuid)

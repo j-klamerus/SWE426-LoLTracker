@@ -9,8 +9,10 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+// Connects kotlin backend code to HTTP requests with Retrofit
 interface RiotApiService {
 
+    //@GET is API command with variables as @PATH. Data is sent through "Response" to the associated data class
     @GET("riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}")
     suspend fun getAccountPUUID(
         @Path("gameName") gameName: String,
