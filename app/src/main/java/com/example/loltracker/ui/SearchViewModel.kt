@@ -9,7 +9,7 @@ import com.example.loltracker.network.RiotSummonerApi
 import kotlinx.coroutines.launch
 
 class SearchViewModel : ViewModel() {
-    val accountData = MutableLiveData<AccountResponse?>()
+    val accountData = MutableLiveData<AccountResponse>()
     val profileData = MutableLiveData<ProfileResponse>()
     val errorMessage = MutableLiveData<String>()
 

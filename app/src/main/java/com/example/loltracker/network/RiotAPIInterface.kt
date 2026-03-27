@@ -3,6 +3,7 @@ package com.example.loltracker.network
 import com.example.loltracker.model.AccountResponse
 import com.example.loltracker.model.ProfileResponse
 import com.example.loltracker.model.MatchIDResponse
+import com.example.loltracker.model.SummonerMatchData
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -27,5 +28,11 @@ interface RiotApiService {
     suspend fun getAccountMatchIDS(
         @Path("puuid") puuid: String,
         @Query("api_key") apiKey: String
-    ): Response<MatchIDResponse> //Response<MatchIDS>
+    ): Response<List<String>>
+
+    @GET("/lol/match/v5/matches/{matchId}")
+    suspend fun  getSummonerMatchData(
+        @Path("matchId") matchId: String,
+        @Query("api_key") apiKey: String
+    ): Response<SummonerMatchData>
 }

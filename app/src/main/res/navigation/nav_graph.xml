@@ -13,6 +13,9 @@
         <argument
             android:name="account"
             app:argType="string" />
+        <argument
+            android:name="puuid"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"

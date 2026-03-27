@@ -30,6 +30,13 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/account_display_head"/>
+                <TextView
+                    android:id="@+id/recentGames"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text=""
+                    />
 
             </LinearLayout>
     </ScrollView>

@@ -3,7 +3,7 @@ package com.example.loltracker.network
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-// For getting account's puuid
+// For getting account's puuid, also use for fetching matches
 object RiotAccountApi {
     val api: RiotApiService by lazy {
         Retrofit.Builder()

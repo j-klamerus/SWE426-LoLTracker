@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.loltracker.databinding.FragmentSearchBinding
 import androidx.lifecycle.lifecycleScope
 import com.example.loltracker.network.RiotAccountApi
@@ -13,6 +14,10 @@ import com.example.loltracker.network.RiotSummonerApi
 import kotlinx.coroutines.launch
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.example.loltracker.ui.SearchFragmentDirections
+import com.example.loltracker.ui.SearchViewModel
+
+
 
 class SearchFragment : Fragment() {
 
@@ -38,6 +43,12 @@ class SearchFragment : Fragment() {
             binding.textView.text = data?.gameName
             binding.textView2.text = data?.tagLine
             binding.textView3.text = data?.puuid
+            //val puuid = data.puuid
+            val action = SearchFragmentDirections.actionSearchFragmentToProfileStatFragment(
+                account = "${data.gameName}#${data.tagLine}",
+                puuid = data.puuid
+            )
+            findNavController().navigate(action)
         }
 
         viewModel.profileData.observe(viewLifecycleOwner) { profile ->
