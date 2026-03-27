@@ -40,8 +40,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
+                android:digits="abcdefghijklmnopqrstuvwxyz#1234567890"
                 android:text=""
                 android:hint="@string/summoner_name_tag"/>
+
             <!--android:autofillHints="#NA1" (Unsure how it works atm. Might be useful)-->
 
             <Button
