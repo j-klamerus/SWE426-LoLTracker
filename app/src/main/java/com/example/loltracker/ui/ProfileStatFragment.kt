@@ -5,13 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.loltracker.ui.ProfileStatFragmentArgs
 import com.example.loltracker.databinding.FragmentProfileStatBinding
+import androidx.navigation.fragment.navArgs
 
 class ProfileStatFragment : Fragment() {
 
     private var _binding: FragmentProfileStatBinding? = null
     private val binding get() = _binding!!
+    //this grabs the arguments passed when navigating to this fragment
+    private val args: ProfileStatFragmentArgs by navArgs()
+
+    //grab viewmodel
+    private val viewModel: ProfileStatViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,8 +32,19 @@ class ProfileStatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Account is saved in bundle when search is clicked. This retrieves it and assigns to val message
-        val message = ProfileStatFragmentArgs.Companion.fromBundle(requireArguments()).account
+        binding.tempTextView.text = args.account
+        binding.tempTextView2.text = args.puuid
+        binding.tempTextView3.text = args.profileIconId.toString()
+        binding.tempTextView4.text = args.summonerLevel.toString()
+        val message = args.account
+        val puuid = args.puuid
+        viewModel.searchMatchIDS(puuid)
+
+        viewModel.matchDataResults.observe(viewLifecycleOwner) { matches->
+            if(matches != null) {
+                binding.recentGames.text = matches.toString()
+            }
+        }
 
         // Put message text into displayAccount
         binding.displayAccountView.text = message

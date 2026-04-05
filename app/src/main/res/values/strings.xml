@@ -3,10 +3,14 @@
     <string name="summoner_name_tag">Summoner name + #tag</string>
     <string name="search">Search</string>
     <string-array name="regions">
-        <item>North America</item>
-        <item>Europe West</item>
-        <item>Europe Nordic and East</item>
-        <item>Korea</item>
+        <item>NA</item>
+        <item>EUW</item>
+        <item>EUNE</item>
+        <item>KR</item>
     </string-array>
     <string name="account_display_head">Recently played matches</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="favorites">Favorites</string>
+    <string name="recents">Recents</string>
 </resources>

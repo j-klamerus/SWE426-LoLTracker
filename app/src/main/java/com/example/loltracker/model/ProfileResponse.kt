@@ -1,8 +1,9 @@
 package com.example.loltracker.model
 
+// Data class to store API data for when PUUID is used to get profile data.
 data class ProfileResponse(
-    val puuid: String,
-    val profileIconId: String,
+    val profileIconId: Int,
     val revisionDate: Long,
-    val summonerLevel: Long,
+    val puuid: String,
+    val summonerLevel: Long
 )

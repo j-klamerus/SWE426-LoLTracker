@@ -6,16 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.loltracker.databinding.FragmentSearchBinding
-import androidx.lifecycle.lifecycleScope
-import com.example.loltracker.network.RiotAccountApi
-import com.example.loltracker.network.RiotSummonerApi
-import kotlinx.coroutines.launch
+import androidx.fragment.app.viewModels
+import com.example.loltracker.dao.RecentDatabase
+import com.example.loltracker.model.AccountResponse
+import com.example.loltracker.model.ProfileResponse
+
+private var accountData: AccountResponse? = null
+private var profileData: ProfileResponse? = null
 
 class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: SearchViewModel by viewModels()
+    private val recentViewModel: RecentViewModel by viewModels {
+        val dao = RecentDatabase.getInstance(requireContext()).recentDao
+        RecentViewModelFactory(dao)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +38,41 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val apiKey = "RGAPI-9b77c0ab-4f60-4723-90b5-66d9c4dfc106"
+        val apiKey = "RGAPI-1202cb55-cd25-4af6-9efe-e031ce8cee3b"
+
+        viewModel.accountData.observe(viewLifecycleOwner) { data ->
+            // Assigns response to var for navigation
+            accountData = data
+
+            /*
+            // Outputs to UI for testing purposes
+            binding.textView.text = data?.gameName
+            binding.textView2.text = data?.tagLine
+            binding.textView3.text = data?.puuid
+            Not currently used
+             */
+
+            profileNavigate()
+        }
+
+        viewModel.profileData.observe(viewLifecycleOwner) { profile ->
+            // Assigns response to var for navigation
+            profileData = profile
+
+            /*
+            // Outputs to UI for testing purposes
+            binding.textView4.text = profile?.profileIconId.toString()
+            binding.textView5.text = profile?.summonerLevel.toString()
+            Not currently used
+             */
+
+            profileNavigate()
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
+            // Will need to reimplement when visible errors are implemented
+            //if (error != null) binding.textView.text = error
+        }
 
         binding.searchButton.setOnClickListener {
             // Prepares nav controller
@@ -37,71 +80,56 @@ class SearchFragment : Fragment() {
 
             // Grabs the input from the account EditText
             var accountInput = binding.accountInputEdit.text.toString()
+            var regionInput = binding.searchSpinner.selectedItem.toString()
 
             val account = accountInput.split("#")
             val accountUser = account.getOrNull(0) ?: ""
             val accountTag = account.getOrNull(1) ?: ""
 
-            // Test code to make sure trim/splitting works
-            binding.textView.text = accountUser.trim().toString()
-            binding.textView2.text = accountTag.trim().toString()
+            addRecent(accountInput, regionInput)
 
-            lifecycleScope.launch {
-                try {
-                    val accountResponse = RiotAccountApi.api.getAccountPUUID(
-                        accountUser,
-                        accountTag,
-                        apiKey
-                    )
+            viewModel.searchPlayer(accountUser, accountTag, apiKey)
 
-                    if (accountResponse.isSuccessful) {
-                        val data = accountResponse.body()
-                        //val puuid = data?.puuid
-                        binding.textView.text = data?.gameName
-                        binding.textView2.text = data?.tagLine
-                        binding.textView3.text = data?.puuid
-
-                        val profileResponse = RiotSummonerApi.api.getAccountProfile(
-                            binding.textView3.text.toString(),
-                            apiKey
-                        )
-
-                        if (profileResponse.isSuccessful) {
-                            val profileData = profileResponse.body()
-                            binding.textView4.text = profileData?.profileIconId
-                            binding.textView5.text = profileData?.summonerLevel.toString()
-                        } else {
-                            binding.textView.text = "Profile Error: ${profileResponse.code()}"
-                        }
-
-                    } else {
-                        binding.textView2.text = "Account Error: ${accountResponse.code()}"
-                    }
-
-                } catch (e: Exception) {
-                    binding.textView3.text = "Exception: ${e.message}"
-                }
             }
 
-            /*
-            if (account == "latore#soudr") {
-                val action = SearchFragmentDirections.actionSearchFragmentToInvalidSearchFragment()
-                navController.navigate(action)
-            }
-            else {
-                val action = SearchFragmentDirections.actionSearchFragmentToProfileStatFragment(account)
-                navController.navigate(action)
-            }
-            */
-
-
-            // Sends user to profile stat fragment after hitting the Search button
-            //navController.navigate(R.id.action_searchFragment_to_profileStatFragment)
+        binding.favoriteButton.setOnClickListener {
+            findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToFavoritesFragment())
         }
+
+        binding.recentButton.setOnClickListener {
+            findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToRecentFragment())
+        }
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+    // Function is ran during viewModel's data collection. Only transitions to profile fragment if all data is present
+    private fun profileNavigate() {
+        val account = accountData
+        val profile = profileData
+
+        // Both are set to null and get updated as data comes in. This checks to make sure they both received data.
+        if (account != null && profile != null) {
+            val action = SearchFragmentDirections.actionSearchFragmentToProfileStatFragment(
+                account = "${account.gameName}#${account.tagLine}",
+                puuid = account.puuid,
+                profileIconId = profile.profileIconId,
+                summonerLevel = profile.summonerLevel
+            )
+            findNavController().navigate(action)
+        }
+    }
+
+    // Takes data from search and assigns it to values in RecentViewModel.kt
+    // Calls addRecent function which calls Dao insert function
+    private fun addRecent(accountInput: String, regionInput: String) {
+        recentViewModel.newRecentName = accountInput
+        recentViewModel.newRegion = regionInput
+        recentViewModel.addRecent()
+    }
 }
+
