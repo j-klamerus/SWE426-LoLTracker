@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/searchFragment">
+    app:startDestination="@id/matchDetailsFragment">
 
     <fragment
         android:id="@+id/profileStatFragment"
@@ -43,5 +43,16 @@
         <action
             android:id="@+id/action_invalidSearchFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/matchDetailsFragment"
+        android:name="com.example.loltracker.ui.MatchDetailsFragment"
+        tools:layout="@layout/fragment_match_details" >
+        <argument
+            android:name="matchId"
+            app:argType="string"    />
+        <argument
+            android:name="puuid"
+            app:argType="string" />
     </fragment>
 </navigation>

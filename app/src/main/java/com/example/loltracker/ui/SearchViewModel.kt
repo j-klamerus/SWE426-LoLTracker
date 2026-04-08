@@ -35,6 +35,8 @@ class SearchViewModel : ViewModel() {
                         }
                     }
 
+                } else { // added additional error response for account, not just profile - andy
+                    errorMessage.value = "Profile Error: ${accountResponse.code()}"
                 }
             } catch (e: Exception) {
                 errorMessage.value = "Exception: ${e.message}"

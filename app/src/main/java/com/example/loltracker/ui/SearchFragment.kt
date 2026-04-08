@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.example.loltracker.BuildConfig
 import com.example.loltracker.model.AccountResponse
 import com.example.loltracker.model.ProfileResponse
 import com.example.loltracker.ui.SearchFragmentDirections
@@ -43,7 +44,7 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val apiKey = "RGAPI-ee62c093-1c27-4eaa-96e3-c3fc416aa4e6"
+        val apiKey = BuildConfig.RIOT_API_KEY
 
         viewModel.accountData.observe(viewLifecycleOwner) { data ->
             // Assigns response to var for navigation
@@ -75,8 +76,9 @@ class SearchFragment : Fragment() {
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
-            // Will need to reimplement when visible errors are implemented
-            //if (error != null) binding.textView.text = error
+            if (!error.isNullOrBlank()) { // reimplemented because it wasn't working for me - andy
+                binding.accountInputEdit.error = error
+            }
         }
 
         binding.searchButton.setOnClickListener {
