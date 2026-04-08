@@ -13,5 +13,5 @@ Items & runes
 CS  
 Damage bar  
 
-Notes:
-The commit I pushed on 4/7 has the nav_graph set to start at the match details fragment for testing since the match history ui hasn't been implemented yet
+### Notes:  
+The commit I pushed on 4/7 has the navgraph set to start at the match details fragment for testing since the match history ui hasn't been implemented yet
