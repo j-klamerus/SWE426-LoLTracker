@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import com.example.loltracker.dao.RecentDatabase
 import com.example.loltracker.model.AccountResponse
 import com.example.loltracker.model.ProfileResponse
+import com.example.loltracker.BuildConfig
 
 private var accountData: AccountResponse? = null
 private var profileData: ProfileResponse? = null
@@ -38,7 +39,7 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val apiKey = "RGAPI-1202cb55-cd25-4af6-9efe-e031ce8cee3b"
+        val apiKey = BuildConfig.apiKey
 
         viewModel.accountData.observe(viewLifecycleOwner) { data ->
             // Assigns response to var for navigation

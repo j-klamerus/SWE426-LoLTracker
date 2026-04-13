@@ -45,7 +45,7 @@
         android:id="@+id/invalidSearchFragment"
         android:name="com.example.loltracker.ui.InvalidSearchFragment"
         android:label="fragment_invalid_search"
-        tools:layout="@layout/fragment_invalid_search" >
+        tools:layout="@layout/notused_fragment_invalid_search" >
         <action
             android:id="@+id/action_invalidSearchFragment_to_searchFragment"
             app:destination="@id/searchFragment" />

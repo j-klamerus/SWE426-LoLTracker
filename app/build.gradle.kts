@@ -10,6 +10,7 @@ android {
     buildFeatures {
         viewBinding = true
         dataBinding = true
+        buildConfig = true
     }
     namespace = "com.example.loltracker"
     compileSdk {
@@ -24,6 +25,13 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Global API Key
+        buildConfigField(
+            "String",
+            "apiKey",
+            "\"${project.findProperty("apiKey")}\""
+        )
     }
 
     buildTypes {
