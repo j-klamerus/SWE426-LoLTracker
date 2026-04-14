@@ -13,6 +13,19 @@ import com.example.loltracker.dao.RecentDatabase
 import com.example.loltracker.model.AccountResponse
 import com.example.loltracker.model.ProfileResponse
 import com.example.loltracker.BuildConfig
+import androidx.lifecycle.lifecycleScope
+import com.example.loltracker.network.RiotAccountApi
+import com.example.loltracker.network.RiotSummonerApi
+import kotlinx.coroutines.launch
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.loltracker.model.AccountResponse
+import com.example.loltracker.model.ProfileResponse
+import com.example.loltracker.ui.SearchFragmentDirections
+import com.example.loltracker.ui.SearchViewModel
 
 private var accountData: AccountResponse? = null
 private var profileData: ProfileResponse? = null
@@ -40,6 +53,7 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val apiKey = BuildConfig.apiKey
+
 
         viewModel.accountData.observe(viewLifecycleOwner) { data ->
             // Assigns response to var for navigation
@@ -100,6 +114,9 @@ class SearchFragment : Fragment() {
         binding.recentButton.setOnClickListener {
             findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToRecentFragment())
         }
+            viewModel.searchPlayer(accountUser, accountTag, apiKey)
+
+            }
 
     }
 
@@ -124,7 +141,6 @@ class SearchFragment : Fragment() {
             findNavController().navigate(action)
         }
     }
-
     // Takes data from search and assigns it to values in RecentViewModel.kt
     // Calls addRecent function which calls Dao insert function
     private fun addRecent(accountInput: String, regionInput: String) {
