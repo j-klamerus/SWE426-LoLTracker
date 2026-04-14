@@ -12,6 +12,8 @@ import com.example.loltracker.model.MatchID
 import com.example.loltracker.model.SummonerMatchData
 import kotlinx.coroutines.launch
 
+import com.example.loltracker.BuildConfig
+
 class ProfileStatViewModel : ViewModel() {
     val matchDataResults = MutableLiveData<List<SummonerMatchData>>()
 
@@ -20,14 +22,16 @@ class ProfileStatViewModel : ViewModel() {
             try {
                 val matchIDList = RiotAccountApi.api.getAccountMatchIDS(
                     puuid,
-                    "RGAPI-ee62c093-1c27-4eaa-96e3-c3fc416aa4e6"
+                    BuildConfig.apiKey
+
                 ).body()
                 val results = mutableListOf<SummonerMatchData>()
 
                 matchIDList?.forEach { matchID ->
                     val matchData = RiotAccountApi.api.getSummonerMatchData(
                         matchID,
-                        "RGAPI-ee62c093-1c27-4eaa-96e3-c3fc416aa4e6"
+
+                        BuildConfig.apiKey
                     )
                     if (matchData.isSuccessful) {
                         matchData.body()?.let { results.add(it) }

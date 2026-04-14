@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.FavoritesFragment">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.loltracker.ui.FavoritesViewModel"/>
+    </data>
+
+    <ScrollView
+        android:id="@+id/favoritesScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp">
+
+        <!-- Adding new favorite -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/favoriteDisplayText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.favoritesString}" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/favoriteAddEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/summoner_name_tag"
+                    android:digits="abcdefghijklmnopqrstuvwxyz#1234567890"
+                    android:text="@={viewModel.newFavoriteName}"/>
+
+                <Spinner
+                    android:id="@+id/favoriteSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/regions"
+                    android:textSize="15sp"
+                    app:selectedItem="@={viewModel.newRegion}"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/favoriteAddButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Favorite"
+                    android:onClick="@{() -> viewModel.addFav()}"/>
+
+                <Button
+                    android:id="@+id/favoriteDeleteButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delete Favorites"
+                    android:onClick="@{() -> viewModel.delFav()}"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <!-- Potential linear layout / buttons go here -->
+
+    </ScrollView>
+
+</layout>
+

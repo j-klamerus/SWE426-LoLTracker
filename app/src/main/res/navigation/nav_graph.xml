@@ -34,14 +34,30 @@
         <action
             android:id="@+id/action_searchFragment_to_invalidSearchFragment"
             app:destination="@id/invalidSearchFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_recentFragment"
+            app:destination="@id/recentFragment" />
     </fragment>
     <fragment
         android:id="@+id/invalidSearchFragment"
         android:name="com.example.loltracker.ui.InvalidSearchFragment"
         android:label="fragment_invalid_search"
-        tools:layout="@layout/fragment_invalid_search" >
+        tools:layout="@layout/notused_fragment_invalid_search" >
         <action
             android:id="@+id/action_invalidSearchFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.loltracker.ui.FavoritesFragment"
+        android:label="fragment_favorites"
+        tools:layout="@layout/fragment_favorites" />
+    <fragment
+        android:id="@+id/recentFragment"
+        android:name="com.example.loltracker.ui.RecentFragment"
+        android:label="fragment_recent"
+        tools:layout="@layout/fragment_recent" />
 </navigation>
