@@ -1,0 +1,34 @@
+package com.example.loltracker.ui
+
+private const val DDRAGON_VERSION = "16.7.1"
+private const val DDRAGON_BASE = "https://ddragon.leagueoflegends.com/cdn/$DDRAGON_VERSION"
+
+fun championIconUrl(championName: String): String {
+    return "$DDRAGON_BASE/img/champion/$championName.png"
+}
+
+fun itemIconUrl(itemId: Int): String {
+    return "$DDRAGON_BASE/img/item/$itemId.png"
+}
+
+fun spellFileName(spellId: Int): String? {
+    return when (spellId) {
+        1 -> "SummonerBoost"
+        3 -> "SummonerExhaust"
+        4 -> "SummonerFlash"
+        6 -> "SummonerHaste"
+        7 -> "SummonerHeal"
+        11 -> "SummonerSmite"
+        12 -> "SummonerTeleport"
+        13 -> "SummonerMana"
+        14 -> "SummonerDot"
+        21 -> "SummonerBarrier"
+        32 -> "SummonerSnowball"
+        else -> null
+    }
+}
+
+fun spellIconUrl(spellId: Int): String? {
+    val fileName = spellFileName(spellId) ?: return null
+    return "$DDRAGON_BASE/img/spell/$fileName.png"
+}

@@ -25,5 +25,20 @@ data class Participant(
     val deaths: Int,
     val assists: Int,
     val win: Boolean,
-    val championName: String
+    val championName: String,
+    val teamId: Int,
+    val teamPosition: String,
+    val item0: Int,
+    val item1: Int,
+    val item2: Int,
+    val item3: Int,
+    val item4: Int,
+    val item5: Int,
+    val item6: Int,
+    val totalMinionsKilled: Int,
+    val goldEarned: Int,
+    val totalDamageDealtToChampions: Int,
+    val visionScore: Int,
+    val summoner1Id: Int,
+    val summoner2Id: Int
 )

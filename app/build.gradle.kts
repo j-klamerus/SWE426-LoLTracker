@@ -1,9 +1,24 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("androidx.navigation.safeargs.kotlin")
     kotlin("kapt")
 }
+/*
+previous buildconfig implementation to read api key was incorrect, now forces gradle to actually
+import RIOT_API_KEY rather than it forcing to look around for it - andy
+*/
+
+val localProperties = Properties().apply {
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        load(localPropertiesFile.inputStream())
+    }
+}
+
+val riotApiKey = localProperties.getProperty("RIOT_API_KEY") ?: ""
 
 android {
 
@@ -63,6 +78,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation("io.coil-kt:coil:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.10.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
