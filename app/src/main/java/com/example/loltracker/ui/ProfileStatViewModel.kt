@@ -13,6 +13,8 @@ import com.example.loltracker.model.MatchID
 import com.example.loltracker.model.SummonerMatchData
 import kotlinx.coroutines.launch
 
+import com.example.loltracker.BuildConfig
+
 class ProfileStatViewModel : ViewModel() {
     val matchDataResults = MutableLiveData<List<SummonerMatchData>>()
 

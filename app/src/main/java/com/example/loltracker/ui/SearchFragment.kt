@@ -8,6 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.loltracker.databinding.FragmentSearchBinding
+import androidx.fragment.app.viewModels
+import com.example.loltracker.dao.RecentDatabase
+import com.example.loltracker.model.AccountResponse
+import com.example.loltracker.model.ProfileResponse
+import com.example.loltracker.BuildConfig
 import androidx.lifecycle.lifecycleScope
 import com.example.loltracker.network.RiotAccountApi
 import com.example.loltracker.network.RiotSummonerApi
@@ -31,6 +36,10 @@ class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SearchViewModel by viewModels()
+    private val recentViewModel: RecentViewModel by viewModels {
+        val dao = RecentDatabase.getInstance(requireContext()).recentDao
+        RecentViewModelFactory(dao)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -87,11 +96,25 @@ class SearchFragment : Fragment() {
 
             // Grabs the input from the account EditText
             var accountInput = binding.accountInputEdit.text.toString()
+            var regionInput = binding.searchSpinner.selectedItem.toString()
 
             val account = accountInput.split("#")
             val accountUser = account.getOrNull(0) ?: ""
             val accountTag = account.getOrNull(1) ?: ""
 
+            addRecent(accountInput, regionInput)
+
+            viewModel.searchPlayer(accountUser, accountTag, apiKey)
+
+            }
+
+        binding.favoriteButton.setOnClickListener {
+            findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToFavoritesFragment())
+        }
+
+        binding.recentButton.setOnClickListener {
+            findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToRecentFragment())
+        }
             viewModel.searchPlayer(accountUser, accountTag, apiKey)
 
             }
@@ -118,6 +141,13 @@ class SearchFragment : Fragment() {
             )
             findNavController().navigate(action)
         }
+    }
+    // Takes data from search and assigns it to values in RecentViewModel.kt
+    // Calls addRecent function which calls Dao insert function
+    private fun addRecent(accountInput: String, regionInput: String) {
+        recentViewModel.newRecentName = accountInput
+        recentViewModel.newRegion = regionInput
+        recentViewModel.addRecent()
     }
 }
 

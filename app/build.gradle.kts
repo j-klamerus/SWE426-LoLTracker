@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("androidx.navigation.safeargs.kotlin")
+    kotlin("kapt")
 }
 /*
 previous buildconfig implementation to read api key was incorrect, now forces gradle to actually
@@ -23,6 +24,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        dataBinding = true
         buildConfig = true
     }
     namespace = "com.example.loltracker"
@@ -38,10 +40,12 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Global API Key
         buildConfigField(
             "String",
-            "RIOT_API_KEY",
-            "\"$riotApiKey\""
+            "apiKey",
+            "\"${project.findProperty("apiKey")}\""
         )
     }
 
@@ -75,10 +79,15 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation("io.coil-kt:coil:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.10.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("androidx.room:room-runtime:2.8.4")
+    implementation("androidx.room:room-ktx:2.8.4")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    kapt("androidx.room:room-compiler:2.8.4")
 }
