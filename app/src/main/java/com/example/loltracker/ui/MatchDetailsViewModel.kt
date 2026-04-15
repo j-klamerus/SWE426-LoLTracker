@@ -18,7 +18,7 @@ class MatchDetailsViewModel : ViewModel() {
             try {
                 val response = RiotAccountApi.api.getSummonerMatchData(
                     matchId,
-                    BuildConfig.RIOT_API_KEY
+                    BuildConfig.apiKey
                 )
 
                 if (response.isSuccessful) {

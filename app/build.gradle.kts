@@ -41,7 +41,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        // Global API Key
+        // Global API Key (Might not be needed. Unsure how Andy's works. This one won't work atm due to how I merged)
+        // Note: These files don't get pushed to GitHub. The key will need to be added to the local file everytime.
         buildConfigField(
             "String",
             "apiKey",

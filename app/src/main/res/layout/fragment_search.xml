@@ -41,16 +41,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:digits="abcdefghijklmnopqrstuvwxyz#1234567890"
-                android:text=""
-                android:hint="@string/summoner_name_tag"/>
+                android:hint="@string/summoner_name_tag"
+                android:text="" />
 
             <!--android:autofillHints="#NA1" (Unsure how it works atm. Might be useful)-->
 
-            <!--android:autofillHints="#NA1" (Unsure how it works atm. Might be useful)-->
-
-            <!-- Test textViews not currently in use
-            <TextView
-                android:id="@+id/textView"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -85,16 +81,9 @@
                     android:text="@string/recents" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
-            -->
 
         </LinearLayout>
 
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
