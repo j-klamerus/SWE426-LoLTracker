@@ -1,4 +1,4 @@
-package com.example.loltracker.model
+package com.example.loltracker.data
 
 import com.google.gson.annotations.SerializedName
 
@@ -14,6 +14,7 @@ data class MatchMetadata(
 data class MatchInfo(
     val gameMode: String,
     val gameDuration: Long,
+    val gameCreation: Long,
     val gameType: String,
     val participants: List<Participant>
 )

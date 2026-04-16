@@ -10,7 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
+import com.example.loltracker.data.SummonerMatchData
 import com.example.loltracker.databinding.FragmentMatchDetailsBinding
+import com.example.loltracker.network.championIconUrl
+import com.example.loltracker.network.itemIconUrl
+import com.example.loltracker.network.spellIconUrl
 
 class MatchDetailsFragment : Fragment() {
 
@@ -47,11 +51,11 @@ class MatchDetailsFragment : Fragment() {
             }
         }
 
-        viewModel.loadMatch("NA1_5510840965")
+        viewModel.loadMatch(args.matchId)
         // rn I have this set to an explicit matchid for testing, change to args.matchId once done - andy
     }
 
-    private fun bindMatch(match: com.example.loltracker.model.SummonerMatchData) {
+    private fun bindMatch(match: SummonerMatchData) {
         binding.tvQueueType.text = match.info.gameMode
 
         val durationMinutes = match.info.gameDuration / 60
@@ -61,7 +65,7 @@ class MatchDetailsFragment : Fragment() {
         val blueTeam = match.info.participants.filter {it.teamId == 100}
         val redTeam = match.info.participants.filter {it.teamId == 200}
 
-        val focusedPlayer = blueTeam.firstOrNull() ?: match.info.participants.first()
+        val focusedPlayer = match.info.participants.firstOrNull { it.puuid == args.puuid } ?: match.info.participants.first()
         // not taken from actual focused player, needs to take puuid from match history page to show as intended
 
         binding.tvMatchResult.text = if (focusedPlayer.win) "Victory" else "Defeat"

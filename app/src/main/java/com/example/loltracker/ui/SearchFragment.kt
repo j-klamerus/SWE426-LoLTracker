@@ -51,29 +51,12 @@ class SearchFragment : Fragment() {
         viewModel.accountData.observe(viewLifecycleOwner) { data ->
             // Assigns response to var for navigation
             accountData = data
-
-            /*
-            // Outputs to UI for testing purposes
-            binding.textView.text = data?.gameName
-            binding.textView2.text = data?.tagLine
-            binding.textView3.text = data?.puuid
-            Not currently used
-             */
-
             profileNavigate()
         }
 
         viewModel.profileData.observe(viewLifecycleOwner) { profile ->
             // Assigns response to var for navigation
             profileData = profile
-
-            /*
-            // Outputs to UI for testing purposes
-            binding.textView4.text = profile?.profileIconId.toString()
-            binding.textView5.text = profile?.summonerLevel.toString()
-            Not currently used
-             */
-
             profileNavigate()
         }
 
