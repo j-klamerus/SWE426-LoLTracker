@@ -1,43 +1,49 @@
 package com.example.loltracker.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.loltracker.ui.SearchViewModel
-import com.example.loltracker.model.AccountResponse
-import com.example.loltracker.model.ProfileResponse
-import com.example.loltracker.model.MatchIDResponse
 import com.example.loltracker.network.RiotAccountApi
-import com.example.loltracker.network.RiotSummonerApi
 import androidx.lifecycle.MutableLiveData
 import com.example.loltracker.BuildConfig
-import com.example.loltracker.model.MatchID
-import com.example.loltracker.model.SummonerMatchData
+import com.example.loltracker.data.PlayerMatchSummary
+import com.example.loltracker.data.SummonerMatchData
+import com.example.loltracker.data.toPlayerSummary
 import kotlinx.coroutines.launch
 
 class ProfileStatViewModel : ViewModel() {
-    val matchDataResults = MutableLiveData<List<SummonerMatchData>>()
+    //val matchDataResults = MutableLiveData<List<SummonerMatchData>>() (Historic)
+    val matchDataHistory = MutableLiveData<List<PlayerMatchSummary>>()
 
     fun searchMatchIDS(puuid: String) {
         viewModelScope.launch {
             try {
+                // Calls getAccountMatchIDS function based on the player's puuid and project API key.
+                // Returns 5 match IDs
                 val matchIDList = RiotAccountApi.api.getAccountMatchIDS(
                     puuid,
                     BuildConfig.apiKey
                 ).body()
-                val results = mutableListOf<SummonerMatchData>()
 
+                val results = mutableListOf<PlayerMatchSummary>()
+
+                // Takes each match ID & API key to submit a request for the actual match data.
                 matchIDList?.forEach { matchID ->
                     val matchData = RiotAccountApi.api.getSummonerMatchData(
                         matchID,
                         BuildConfig.apiKey
                     )
                     if (matchData.isSuccessful) {
-                        matchData.body()?.let { results.add(it) }
+                        val summary = matchData.body()?.toPlayerSummary(puuid)
+                        if (summary != null) { results.add(summary) }
+
+                        //matchData.body()?.let { results.add(it) } (What output the raw data to the history UI)
                     }
+
+                    matchDataHistory.postValue(results)
                 }
                 //update live data
-                matchDataResults.postValue(results)
+                //matchDataResults.postValue(results) (Historic)
             } catch (e: Exception) {
-
+                // or maybe here?
             }
         }
     }

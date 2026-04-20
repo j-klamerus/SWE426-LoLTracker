@@ -46,7 +46,7 @@ android {
         buildConfigField(
             "String",
             "apiKey",
-            "\"${project.findProperty("apiKey")}\""
+            "\"${project.findProperty("RIOT_API_KEY")}\""
         )
     }
 

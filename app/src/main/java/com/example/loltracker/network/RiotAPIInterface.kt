@@ -2,8 +2,7 @@ package com.example.loltracker.network
 
 import com.example.loltracker.model.AccountResponse
 import com.example.loltracker.model.ProfileResponse
-import com.example.loltracker.model.MatchIDResponse
-import com.example.loltracker.model.SummonerMatchData
+import com.example.loltracker.data.SummonerMatchData
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.loltracker.BuildConfig
-import com.example.loltracker.model.SummonerMatchData
+import com.example.loltracker.data.SummonerMatchData
 import com.example.loltracker.network.RiotAccountApi
 import kotlinx.coroutines.launch
 

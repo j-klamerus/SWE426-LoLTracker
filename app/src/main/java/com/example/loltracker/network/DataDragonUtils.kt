@@ -1,8 +1,9 @@
-package com.example.loltracker.ui
+package com.example.loltracker.network
 
 private const val DDRAGON_VERSION = "16.7.1"
 private const val DDRAGON_BASE = "https://ddragon.leagueoflegends.com/cdn/$DDRAGON_VERSION"
 
+// DDRAGON (Data Dragon) is Riot's massive asset group. The intended use is to be stored locally (and not called like how we are), but this is fine.
 fun championIconUrl(championName: String): String {
     return "$DDRAGON_BASE/img/champion/$championName.png"
 }
@@ -31,4 +32,8 @@ fun spellFileName(spellId: Int): String? {
 fun spellIconUrl(spellId: Int): String? {
     val fileName = spellFileName(spellId) ?: return null
     return "$DDRAGON_BASE/img/spell/$fileName.png"
+}
+
+fun userIconUrl(iconNum: String): String {
+    return "$DDRAGON_BASE/img/profileicon/$iconNum.png"
 }

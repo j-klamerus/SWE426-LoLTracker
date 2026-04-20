@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/matchDetailsFragment">
+    app:startDestination="@id/searchFragment">
 
     <fragment
         android:id="@+id/profileStatFragment"
@@ -22,6 +22,12 @@
         <argument
             android:name="summonerLevel"
             app:argType="long" />
+        <action
+            android:id="@+id/action_profileStatFragment_to_matchDetailsFragment"
+            app:destination="@id/matchDetailsFragment" />
+        <action
+            android:id="@+id/action_profileStatFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -48,6 +54,9 @@
         <argument
             android:name="puuid"
             app:argType="string" />
+        <action
+            android:id="@+id/action_matchDetailsFragment_to_profileStatFragment"
+            app:destination="@id/profileStatFragment" />
     </fragment>
     <fragment
         android:id="@+id/recentFragment"

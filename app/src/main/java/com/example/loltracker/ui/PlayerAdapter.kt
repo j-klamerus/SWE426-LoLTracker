@@ -3,14 +3,13 @@ package com.example.loltracker.ui
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.loltracker.R
 import com.example.loltracker.databinding.ItemPlayerRowBinding
-import com.example.loltracker.model.Participant
+import com.example.loltracker.data.Participant
 import android.widget.ImageView
 import coil.load
-import com.example.loltracker.ui.championIconUrl
-import com.example.loltracker.ui.itemIconUrl
-import com.example.loltracker.ui.spellIconUrl
+import com.example.loltracker.network.championIconUrl
+import com.example.loltracker.network.itemIconUrl
+
 class PlayerAdapter(
     private val players: List<Participant>
 ) : RecyclerView.Adapter<PlayerAdapter.PlayerViewHolder>() {
