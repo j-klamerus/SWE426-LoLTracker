@@ -1,7 +1,9 @@
 package com.example.loltracker.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.loltracker.network.RiotAccountApi
+import com.example.loltracker.network.RiotAccountApiAM
+import com.example.loltracker.network.RiotAccountApiEU
+import com.example.loltracker.network.RiotAccountApiAS
 import androidx.lifecycle.MutableLiveData
 import com.example.loltracker.BuildConfig
 import com.example.loltracker.data.PlayerMatchSummary
@@ -13,12 +15,20 @@ class ProfileStatViewModel : ViewModel() {
     //val matchDataResults = MutableLiveData<List<SummonerMatchData>>() (Historic)
     val matchDataHistory = MutableLiveData<List<PlayerMatchSummary>>()
 
-    fun searchMatchIDS(puuid: String) {
+    fun searchMatchIDS(puuid: String, region: String) {
+
+        val api = when (region) {
+            "NA" -> RiotAccountApiAM.api
+            "EUW", "EUNE" -> RiotAccountApiEU.api
+            "KR" -> RiotAccountApiAS.api
+            else -> RiotAccountApiAM.api
+        }
+
         viewModelScope.launch {
             try {
                 // Calls getAccountMatchIDS function based on the player's puuid and project API key.
                 // Returns 5 match IDs
-                val matchIDList = RiotAccountApi.api.getAccountMatchIDS(
+                val matchIDList = api.getAccountMatchIDS(
                     puuid,
                     BuildConfig.apiKey
                 ).body()
@@ -27,7 +37,7 @@ class ProfileStatViewModel : ViewModel() {
 
                 // Takes each match ID & API key to submit a request for the actual match data.
                 matchIDList?.forEach { matchID ->
-                    val matchData = RiotAccountApi.api.getSummonerMatchData(
+                    val matchData = api.getSummonerMatchData(
                         matchID,
                         BuildConfig.apiKey
                     )

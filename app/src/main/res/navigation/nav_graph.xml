@@ -22,6 +22,9 @@
         <argument
             android:name="summonerLevel"
             app:argType="long" />
+        <argument
+            android:name="region"
+            app:argType="string" />
         <action
             android:id="@+id/action_profileStatFragment_to_matchDetailsFragment"
             app:destination="@id/matchDetailsFragment" />
@@ -53,6 +56,9 @@
             app:argType="string"    />
         <argument
             android:name="puuid"
+            app:argType="string" />
+        <argument
+            android:name="region"
             app:argType="string" />
         <action
             android:id="@+id/action_matchDetailsFragment_to_profileStatFragment"

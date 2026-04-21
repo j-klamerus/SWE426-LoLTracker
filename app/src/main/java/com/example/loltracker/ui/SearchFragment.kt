@@ -14,8 +14,13 @@ import com.example.loltracker.model.AccountResponse
 import com.example.loltracker.model.ProfileResponse
 import com.example.loltracker.BuildConfig
 import androidx.lifecycle.lifecycleScope
-import com.example.loltracker.network.RiotAccountApi
-import com.example.loltracker.network.RiotSummonerApi
+import com.example.loltracker.network.RiotAccountApiAM
+import com.example.loltracker.network.RiotSummonerApiAM
+import com.example.loltracker.network.RiotAccountApiEU
+import com.example.loltracker.network.RiotSummonerApiEUNE
+import com.example.loltracker.network.RiotSummonerApiEUW
+import com.example.loltracker.network.RiotAccountApiAS
+import com.example.loltracker.network.RiotSummonerApiAS
 import kotlinx.coroutines.launch
 import androidx.lifecycle.Observer
 import com.example.loltracker.ui.SearchFragmentDirections
@@ -74,6 +79,8 @@ class SearchFragment : Fragment() {
             var accountInput = binding.accountInputEdit.text.toString()
             var regionInput = binding.searchSpinner.selectedItem.toString()
 
+            viewModel.selectedRegion.value = regionInput
+
             val account = accountInput.split("#")
             val accountUser = account.getOrNull(0) ?: ""
             val accountTag = account.getOrNull(1) ?: ""
@@ -110,7 +117,8 @@ class SearchFragment : Fragment() {
                 account = "${account.gameName}#${account.tagLine}",
                 puuid = account.puuid,
                 profileIconId = profile.profileIconId,
-                summonerLevel = profile.summonerLevel
+                summonerLevel = profile.summonerLevel,
+                region = binding.searchSpinner.selectedItem.toString()
             )
             findNavController().navigate(action)
         }

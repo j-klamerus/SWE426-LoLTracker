@@ -4,8 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.loltracker.model.AccountResponse
 import com.example.loltracker.model.ProfileResponse
-import com.example.loltracker.network.RiotAccountApi
-import com.example.loltracker.network.RiotSummonerApi
+import com.example.loltracker.network.RiotAccountApiAM
+import com.example.loltracker.network.RiotAccountApiAS
+import com.example.loltracker.network.RiotAccountApiEU
+import com.example.loltracker.network.RiotSummonerApiAM
+import com.example.loltracker.network.RiotSummonerApiAS
+import com.example.loltracker.network.RiotSummonerApiEUNE
+import com.example.loltracker.network.RiotSummonerApiEUW
 import kotlinx.coroutines.launch
 
 class SearchViewModel : ViewModel() {
@@ -13,10 +18,30 @@ class SearchViewModel : ViewModel() {
     val profileData = MutableLiveData<ProfileResponse>()
     val errorMessage = MutableLiveData<String>()
 
+    val selectedRegion = MutableLiveData<String>("NA")
+
+
     fun searchPlayer(accountUser: String, accountTag: String, apiKey: String) {
+
+        val region = selectedRegion.value
+        val accountApi = when (region) {
+            "NA" -> RiotAccountApiAM.api
+            "EUW", "EUNE" -> RiotAccountApiEU.api
+            "KR" -> RiotAccountApiAS.api
+            else -> RiotAccountApiAM.api
+        }
+
+        val summonerApi = when (region) {
+            "NA" -> RiotSummonerApiAM.api
+            "EUW" -> RiotSummonerApiEUW.api
+            "EUNE" -> RiotSummonerApiEUNE.api
+            "KR" -> RiotSummonerApiAS.api
+            else -> RiotSummonerApiAM.api
+        }
+
         viewModelScope.launch {
             try {
-                val accountResponse = RiotAccountApi.api.getAccountPUUID(
+                val accountResponse = accountApi.getAccountPUUID(
                     accountUser,
                     accountTag,
                     apiKey
@@ -27,7 +52,7 @@ class SearchViewModel : ViewModel() {
                     accountData.value = data
 
                     data?.puuid?.let { puuid ->
-                        val profileResponse = RiotSummonerApi.api.getAccountProfile(puuid, apiKey)
+                        val profileResponse = summonerApi.getAccountProfile(puuid, apiKey)
                         if (profileResponse.isSuccessful) {
                             profileData.value = profileResponse.body()
                         } else {

@@ -51,8 +51,7 @@ class MatchDetailsFragment : Fragment() {
             }
         }
 
-        viewModel.loadMatch(args.matchId)
-        // rn I have this set to an explicit matchid for testing, change to args.matchId once done - andy
+        viewModel.loadMatch(args.matchId, args.region)
     }
 
     private fun bindMatch(match: SummonerMatchData) {

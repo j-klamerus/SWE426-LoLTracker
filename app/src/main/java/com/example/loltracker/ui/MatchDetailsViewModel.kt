@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.loltracker.BuildConfig
 import com.example.loltracker.data.SummonerMatchData
-import com.example.loltracker.network.RiotAccountApi
+import com.example.loltracker.network.RiotAccountApiAM
+import com.example.loltracker.network.RiotAccountApiEU
+import com.example.loltracker.network.RiotAccountApiAS
 import kotlinx.coroutines.launch
 
 class MatchDetailsViewModel : ViewModel() {
@@ -13,10 +15,18 @@ class MatchDetailsViewModel : ViewModel() {
     val matchData = MutableLiveData<SummonerMatchData?>()
     val errorMessage = MutableLiveData<String?>()
 
-    fun loadMatch(matchId: String) {
+    fun loadMatch(matchId: String, region: String) {
+
+        val api = when (region) {
+            "NA" -> RiotAccountApiAM.api
+            "EUW", "EUNE" -> RiotAccountApiEU.api
+            "KR" -> RiotAccountApiAS.api
+            else -> RiotAccountApiAM.api
+        }
+
         viewModelScope.launch {
             try {
-                val response = RiotAccountApi.api.getSummonerMatchData(
+                val response = api.getSummonerMatchData(
                     matchId,
                     BuildConfig.apiKey
                 )

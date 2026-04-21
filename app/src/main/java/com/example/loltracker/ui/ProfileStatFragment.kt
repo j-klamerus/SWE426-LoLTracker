@@ -43,7 +43,8 @@ class ProfileStatFragment : Fragment() {
         binding.profileIconImage.load(userIconUrl(args.profileIconId.toString()))
         val message = args.account
         val puuid = args.puuid
-        viewModel.searchMatchIDS(puuid)
+        val region = args.region
+        viewModel.searchMatchIDS(puuid, region)
 
         // --------------------------------------------------------------------------------------------------
         // Match Data Loading and Formatting
@@ -114,35 +115,35 @@ class ProfileStatFragment : Fragment() {
             val match = viewModel.matchDataHistory.value?.getOrNull(0)
             val matchID = match?.matchId
 
-            findNavController().navigate(ProfileStatFragmentDirections.actionProfileStatFragmentToMatchDetailsFragment(matchID.toString(), puuid))
+            findNavController().navigate(ProfileStatFragmentDirections.actionProfileStatFragmentToMatchDetailsFragment(matchID.toString(), puuid, region))
         }
 
         binding.viewMatchButton2.setOnClickListener {
             val match = viewModel.matchDataHistory.value?.getOrNull(1)
             val matchID = match?.matchId
 
-            findNavController().navigate(ProfileStatFragmentDirections.actionProfileStatFragmentToMatchDetailsFragment(matchID.toString(), puuid))
+            findNavController().navigate(ProfileStatFragmentDirections.actionProfileStatFragmentToMatchDetailsFragment(matchID.toString(), puuid, region))
         }
 
         binding.viewMatchButton3.setOnClickListener {
             val match = viewModel.matchDataHistory.value?.getOrNull(2)
             val matchID = match?.matchId
 
-            findNavController().navigate(ProfileStatFragmentDirections.actionProfileStatFragmentToMatchDetailsFragment(matchID.toString(), puuid))
+            findNavController().navigate(ProfileStatFragmentDirections.actionProfileStatFragmentToMatchDetailsFragment(matchID.toString(), puuid, region))
         }
 
         binding.viewMatchButton4.setOnClickListener {
             val match = viewModel.matchDataHistory.value?.getOrNull(3)
             val matchID = match?.matchId
 
-            findNavController().navigate(ProfileStatFragmentDirections.actionProfileStatFragmentToMatchDetailsFragment(matchID.toString(), puuid))
+            findNavController().navigate(ProfileStatFragmentDirections.actionProfileStatFragmentToMatchDetailsFragment(matchID.toString(), puuid, region))
         }
 
         binding.viewMatchButton5.setOnClickListener {
             val match = viewModel.matchDataHistory.value?.getOrNull(4)
             val matchID = match?.matchId
 
-            findNavController().navigate(ProfileStatFragmentDirections.actionProfileStatFragmentToMatchDetailsFragment(matchID.toString(), puuid))
+            findNavController().navigate(ProfileStatFragmentDirections.actionProfileStatFragmentToMatchDetailsFragment(matchID.toString(), puuid, region))
         }
 
 
