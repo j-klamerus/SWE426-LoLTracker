@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/favoritesFragment" android:title="Favorites" android:icon="@drawable/ic_far_address_book"/>
+    <item android:id="@+id/searchFragment" android:title="Search" android:icon="@drawable/ic_far_map"/>
+    <item android:id="@+id/recentFragment" android:title="Recents" android:icon="@drawable/ic_far_list_alt"/>
+</menu>

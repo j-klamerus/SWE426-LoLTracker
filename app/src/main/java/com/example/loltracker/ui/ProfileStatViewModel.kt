@@ -12,7 +12,8 @@ import com.example.loltracker.data.toPlayerSummary
 import kotlinx.coroutines.launch
 
 class ProfileStatViewModel : ViewModel() {
-    //val matchDataResults = MutableLiveData<List<SummonerMatchData>>() (Historic)
+    private var loadedForPuuid: String? = null
+    val loading = MutableLiveData(false)
     val matchDataHistory = MutableLiveData<List<PlayerMatchSummary>>()
 
     fun searchMatchIDS(puuid: String, region: String) {
@@ -24,7 +25,13 @@ class ProfileStatViewModel : ViewModel() {
             else -> RiotAccountApiAM.api
         }
 
+        if (loadedForPuuid == puuid) return
+        if (loading.value == true) return
+
+        loadedForPuuid = puuid
+
         viewModelScope.launch {
+            loading.value = true
             try {
                 // Calls getAccountMatchIDS function based on the player's puuid and project API key.
                 // Returns 5 match IDs
@@ -44,6 +51,7 @@ class ProfileStatViewModel : ViewModel() {
                     if (matchData.isSuccessful) {
                         val summary = matchData.body()?.toPlayerSummary(puuid)
                         if (summary != null) { results.add(summary) }
+                        loading.value = false
 
                         //matchData.body()?.let { results.add(it) } (What output the raw data to the history UI)
                     }
@@ -51,8 +59,8 @@ class ProfileStatViewModel : ViewModel() {
                     matchDataHistory.postValue(results)
                 }
                 //update live data
-                //matchDataResults.postValue(results) (Historic)
-            } catch (e: Exception) {
+            }
+            catch (e: Exception) {
                 // or maybe here?
             }
         }

@@ -16,6 +16,7 @@ import com.example.loltracker.network.championIconUrl
 import com.example.loltracker.network.userIconUrl
 import kotlin.math.floor
 import com.google.android.material.color.MaterialColors
+import com.example.loltracker.R
 
 class ProfileStatFragment : Fragment() {
 

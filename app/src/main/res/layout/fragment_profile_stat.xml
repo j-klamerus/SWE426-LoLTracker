@@ -352,15 +352,6 @@
 
                 </LinearLayout>
 
-                <!-- Keeping this temporarily to compare API data -->
-                <TextView
-                    android:id="@+id/recentGames"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:textSize="15sp"
-                    android:text="{raw api. delete me eventually}" />
-
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline"
                     android:layout_width="match_parent"

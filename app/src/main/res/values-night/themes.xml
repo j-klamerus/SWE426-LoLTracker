@@ -6,4 +6,6 @@
         <item name="colorSecondary">#DEA21B</item>
         <item name="colorOnSecondary">#000000</item>
     </style>
+
+    <style name="Theme.LoLTracker" parent="Base.Theme.LoLTracker" />
 </resources>
