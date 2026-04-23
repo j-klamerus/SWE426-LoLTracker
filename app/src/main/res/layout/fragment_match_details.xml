@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="matchInfo"
+            type="com.example.loltracker.data.SummonerMatchData" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -11,11 +18,12 @@
         android:padding="16dp">
 
         <!-- Match header -->
+        <!-- Use of databinding -->
         <TextView
             android:id="@+id/tvQueueType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ranked Solo/Duo"
+            android:text="@{matchInfo.info.gameMode}"
             android:textSize="22sp"
             android:textStyle="bold" />
 
@@ -33,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="32m 14s" />
+            android:text="" />
 
         <!-- Focused player summary -->
         <LinearLayout
@@ -59,7 +67,7 @@
                     android:id="@+id/tvSummonerName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SummonerName"
+                    android:text="@{matchInfo.info."
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -249,3 +257,4 @@
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
+</layout>
