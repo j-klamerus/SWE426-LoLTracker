@@ -40,6 +40,8 @@ class ProfileStatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Outputs account level and loads profile icon.
+        // Loads values from safeargs bundle
         binding.accountLevelText.text = "Level:  ${args.summonerLevel.toString()}"
         binding.profileIconImage.load(userIconUrl(args.profileIconId.toString()))
         val message = args.account
@@ -67,9 +69,6 @@ class ProfileStatFragment : Fragment() {
             while (i < 5) {
                 // Gets game data for specific match in list
                 val game = matches.getOrNull(i) ?: return@observe
-
-                // android:backgroundTint="?attr/colorPrimary"
-                // android:background="?attr/colorSecondary">
 
                 // Assigns W/L value to UI. Also changes layout colors to be based on W/L/R
                 // Cannot currently handle remakes. Need to revisit
@@ -146,10 +145,6 @@ class ProfileStatFragment : Fragment() {
 
             findNavController().navigate(ProfileStatFragmentDirections.actionProfileStatFragmentToMatchDetailsFragment(matchID.toString(), puuid, region))
         }
-
-
-
-
 
         // Put message text into displayAccount
         binding.accountNameText.text = message

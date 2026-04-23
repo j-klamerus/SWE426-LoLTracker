@@ -18,6 +18,7 @@ import com.example.loltracker.network.spellIconUrl
 
 class MatchDetailsFragment : Fragment() {
 
+    // Set viewbinding and initialze VM/args
     private var _binding: FragmentMatchDetailsBinding? = null
     private val binding get() = _binding!!
 
@@ -36,6 +37,7 @@ class MatchDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Creates layouts for both teams
         binding.recyclerBlueTeam.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerRedTeam.layoutManager = LinearLayoutManager(requireContext())
 
@@ -51,12 +53,14 @@ class MatchDetailsFragment : Fragment() {
             }
         }
 
+        // Calls function in MatchDetailsViewModel. Gathers match data
         viewModel.loadMatch(args.matchId, args.region)
     }
 
     private fun bindMatch(match: SummonerMatchData) {
         binding.tvQueueType.text = match.info.gameMode
 
+        // Calculate game time (1205 -> 20:05)
         val durationMinutes = match.info.gameDuration / 60
         val durationSeconds = match.info.gameDuration % 60
         binding.tvGameDuration.text = "${durationMinutes}m ${durationSeconds}s"
@@ -64,8 +68,8 @@ class MatchDetailsFragment : Fragment() {
         val blueTeam = match.info.participants.filter {it.teamId == 100}
         val redTeam = match.info.participants.filter {it.teamId == 200}
 
+        // Uses searched puuid to select focused player and display additional stats
         val focusedPlayer = match.info.participants.firstOrNull { it.puuid == args.puuid } ?: match.info.participants.first()
-        // not taken from actual focused player, needs to take puuid from match history page to show as intended
 
         binding.tvMatchResult.text = if (focusedPlayer.win) "Victory" else "Defeat"
         binding.tvSummonerName.text = focusedPlayer.summonerName
@@ -76,13 +80,11 @@ class MatchDetailsFragment : Fragment() {
         binding.tvDamage.text = "Damage: ${focusedPlayer.totalDamageDealtToChampions}"
         binding.tvVisionScore.text = "Vision Score: ${focusedPlayer.visionScore}"
 
-
+        // Various calls to DataDragonUtils
         binding.imgChampionIcon.load(championIconUrl(focusedPlayer.championName))
-
 
         spellIconUrl(focusedPlayer.summoner1Id)?.let {binding.imgSpell1.load(it)}
         spellIconUrl(focusedPlayer.summoner2Id)?.let {binding.imgSpell2.load(it)}
-
 
         loadItem(binding.item0, focusedPlayer.item0)
         loadItem(binding.item1, focusedPlayer.item1)

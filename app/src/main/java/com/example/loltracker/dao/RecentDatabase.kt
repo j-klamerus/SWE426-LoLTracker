@@ -15,6 +15,7 @@ abstract class RecentDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: RecentDatabase? = null
 
+        // Creates database
         fun getInstance(context: Context): RecentDatabase{
             synchronized(this){
                 var instance = INSTANCE

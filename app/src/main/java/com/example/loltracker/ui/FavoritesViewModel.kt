@@ -17,6 +17,7 @@ class FavoritesViewModel(val dao: FavoritesDao) : ViewModel() {
         favorites -> formatFavorites(favorites)
     }
 
+    // Takes values from UI and inserts into database
     fun addFav(){
         viewModelScope.launch{
             val favorites = Favorites()
@@ -26,6 +27,7 @@ class FavoritesViewModel(val dao: FavoritesDao) : ViewModel() {
         }
     }
 
+    // Deletes all data in database
     fun delFav(){
         viewModelScope.launch{
             val favorites = Favorites()
@@ -33,6 +35,7 @@ class FavoritesViewModel(val dao: FavoritesDao) : ViewModel() {
         }
     }
 
+    // Formatting for when data is displayed to user
     fun formatFavorites(favorites: List<Favorites>): String{
         return favorites.fold(""){
             str, item -> str + '\n' + formatFavorite(item)

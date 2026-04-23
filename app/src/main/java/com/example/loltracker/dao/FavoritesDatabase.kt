@@ -17,12 +17,14 @@ abstract class FavoritesDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: FavoritesDatabase? = null
 
+        // Migrates database from v1 to v2 (since we made a change)
         private val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(db: SupportSQLiteDatabase) {
                 db.execSQL("ALTER TABLE favorites_table ADD COLUMN region TEXT NOT NULL DEFAULT ''")
             }
         }
 
+        // Creates database
         fun getInstance(context: Context): FavoritesDatabase{
             synchronized(this){
                 var instance = INSTANCE

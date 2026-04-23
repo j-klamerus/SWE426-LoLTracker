@@ -43,6 +43,7 @@ class SearchViewModel : ViewModel() {
         searchCount++
         Log.d("SearchVM", "searchPlayer called: $searchCount  user=$accountUser tag=$accountTag region=${selectedRegion.value}")
 
+        // Gets user's account info and match history based on selected region
         val region = selectedRegion.value.toString()
         val accountApi = when (region) {
             "NA" -> RiotAccountApiAM.api
@@ -61,6 +62,7 @@ class SearchViewModel : ViewModel() {
 
         viewModelScope.launch {
             try {
+                // Gathers player's puuid from name, tag (Ex: player#na1), and the API key
                 val accountResponse = accountApi.getAccountPUUID(accountUser, accountTag, apiKey)
                 if (!accountResponse.isSuccessful) {
                     errorMessage.value = "Account Error: ${accountResponse.code()}"
@@ -74,6 +76,7 @@ class SearchViewModel : ViewModel() {
                 }
                 accountData.value = account
 
+                // Uses puuid from previous fun to get account info (level, icon)
                 val profileResponse = summonerApi.getAccountProfile(account.puuid, apiKey)
                 if (!profileResponse.isSuccessful) {
                     errorMessage.value = "Profile Error: ${profileResponse.code()}"

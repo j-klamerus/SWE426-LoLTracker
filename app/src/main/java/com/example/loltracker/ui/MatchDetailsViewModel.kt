@@ -17,6 +17,7 @@ class MatchDetailsViewModel : ViewModel() {
 
     fun loadMatch(matchId: String, region: String) {
 
+        // Selects proper region to make API call to based on spinner input
         val api = when (region) {
             "NA" -> RiotAccountApiAM.api
             "EUW", "EUNE" -> RiotAccountApiEU.api
@@ -24,6 +25,7 @@ class MatchDetailsViewModel : ViewModel() {
             else -> RiotAccountApiAM.api
         }
 
+        // Requests match data and assigns to Summoner live data when successful
         viewModelScope.launch {
             try {
                 val response = api.getSummonerMatchData(

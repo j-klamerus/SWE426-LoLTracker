@@ -17,6 +17,7 @@ class RecentViewModel(private val dao: RecentDao) : ViewModel() {
             recent -> formatRecent(recent)
     }
 
+    // Called when search button is pressed. Adds new entry to database
     fun addRecent(){
         viewModelScope.launch{
             val recent = Recent()
@@ -26,6 +27,7 @@ class RecentViewModel(private val dao: RecentDao) : ViewModel() {
         }
     }
 
+    // Deletes all entries in database
     fun delRecent(){
         viewModelScope.launch{
             val recent = Recent()
@@ -33,6 +35,7 @@ class RecentViewModel(private val dao: RecentDao) : ViewModel() {
         }
     }
 
+    // Formats data for output to UI
     fun formatRecent(recent: List<Recent>): String{
         return recent.fold(""){
                 str, item -> str + '\n' + formatRecent(item)

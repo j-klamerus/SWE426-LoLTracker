@@ -28,6 +28,7 @@ class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SearchViewModel by viewModels()
+    // Recent searches
     private val recentViewModel: RecentViewModel by viewModels {
         val dao = RecentDatabase.getInstance(requireContext()).recentDao
         RecentViewModelFactory(dao)
@@ -64,20 +65,6 @@ class SearchFragment : Fragment() {
                 }
             }
         }
-
-        /*
-        viewModel.accountData.observe(viewLifecycleOwner) { data ->
-            // Assigns response to var for navigation
-            accountData = data
-            profileNavigate()
-        }
-
-        viewModel.profileData.observe(viewLifecycleOwner) { profile ->
-            // Assigns response to var for navigation
-            profileData = profile
-            profileNavigate()
-        }
-        */
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
             if (!error.isNullOrBlank()) { // reimplemented because it wasn't working for me - andy

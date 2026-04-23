@@ -17,6 +17,7 @@ class PlayerAdapter(
     class PlayerViewHolder(val binding: ItemPlayerRowBinding) :
         RecyclerView.ViewHolder(binding.root)
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerViewHolder {
         val binding = ItemPlayerRowBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -28,6 +29,8 @@ class PlayerAdapter(
 
     override fun getItemCount(): Int = players.size
 
+    // Loads match details data and outputs to frontend. Player name, champion, and KDA scoreline
+    // Also loads champion's icon and all items for each player
     override fun onBindViewHolder(holder: PlayerViewHolder, position: Int) {
         val player = players[position]
         val binding = holder.binding
@@ -46,6 +49,8 @@ class PlayerAdapter(
         loadItem(binding.rowItem5, player.item5)
         loadItem(binding.rowItem6, player.item6)
     }
+
+    // Function called above to load data
     private fun loadItem(imageView: ImageView, itemId: Int) {
         if (itemId == 0) {
             imageView.setImageDrawable(null)

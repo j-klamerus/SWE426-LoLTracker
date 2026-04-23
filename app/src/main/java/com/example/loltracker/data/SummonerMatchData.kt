@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class SummonerMatchData(@SerializedName("metadata") val metadata: MatchMetadata,
                              @SerializedName("info") val info: MatchInfo
 )
-
+// All data needed for match details
 data class MatchMetadata(
     val matchId: String,
     val participants: List<String>

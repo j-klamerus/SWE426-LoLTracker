@@ -24,7 +24,8 @@ object RiotSummonerApiAM {
             .create(RiotApiService::class.java)
     }
 }
-
+// The two above are for the NA region. Each is duplicated for the other three
+// Account for both EU and EUNE
     object RiotAccountApiEU {
         val api: RiotApiService by lazy {
             Retrofit.Builder()
@@ -36,7 +37,7 @@ object RiotSummonerApiAM {
     }
 
 
-    // For getting account's level / profile icon
+// EUW Summoner
     object RiotSummonerApiEUW {
         val api: RiotApiService by lazy {
             Retrofit.Builder()
@@ -46,7 +47,7 @@ object RiotSummonerApiAM {
                 .create(RiotApiService::class.java)
         }
     }
-
+// EUNE Summoner
 object RiotSummonerApiEUNE {
     val api: RiotApiService by lazy {
         Retrofit.Builder()
@@ -56,7 +57,7 @@ object RiotSummonerApiEUNE {
             .create(RiotApiService::class.java)
     }
 }
-
+// KR Region
     object RiotAccountApiAS {
         val api: RiotApiService by lazy {
             Retrofit.Builder()

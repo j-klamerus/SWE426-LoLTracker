@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example.loltracker.model.Recent
 
+// SQLite commands for database
 @Dao
 interface RecentDao {
 

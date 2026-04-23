@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.ColumnInfo
 
+// Creates recent searches table through SQLite
 @Entity(tableName = "recents_table")
 data class Recent (
     @PrimaryKey(autoGenerate = true)

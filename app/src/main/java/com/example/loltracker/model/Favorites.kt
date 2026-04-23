@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.ColumnInfo
 
+// Creates favorites table through SQLite
 @Entity(tableName = "favorites_table")
 data class Favorites (
     @PrimaryKey(autoGenerate = true)

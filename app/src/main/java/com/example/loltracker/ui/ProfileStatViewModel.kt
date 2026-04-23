@@ -52,16 +52,11 @@ class ProfileStatViewModel : ViewModel() {
                         val summary = matchData.body()?.toPlayerSummary(puuid)
                         if (summary != null) { results.add(summary) }
                         loading.value = false
-
-                        //matchData.body()?.let { results.add(it) } (What output the raw data to the history UI)
                     }
-
                     matchDataHistory.postValue(results)
                 }
-                //update live data
             }
             catch (e: Exception) {
-                // or maybe here?
             }
         }
     }

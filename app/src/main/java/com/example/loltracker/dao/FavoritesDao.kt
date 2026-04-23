@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example.loltracker.model.Favorites
 
+// SQLite commands for database
 @Dao
 interface FavoritesDao {
 
